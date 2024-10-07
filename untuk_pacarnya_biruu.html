@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question and Flower for Claire</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .question {
+            text-align: center;
+        }
+
+        .flower, .poop-container, .message, .message2 {
+            display: none;
+        }
+
+        /* Animasi bunga merekah secara bertahap */
+        .flower {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .petal {
+            position: absolute;
+            width: 0;
+            height: 0;
+            background-color: #0000ff; /* Ubah warna petal jadi biru */
+            border-radius: 50%;
+            animation: petal-grow 1s forwards ease-in-out;
+            opacity: 0;
+        }
+
+        .petal:nth-child(1) {
+            top: 0;
+            left: 50px;
+            animation-delay: 0.5s;
+        }
+
+        .petal:nth-child(2) {
+            top: 50px;
+            left: 0;
+            animation-delay: 1.5s;
+        }
+
+        .petal:nth-child(3) {
+            top: 50px;
+            right: 0;
+            animation-delay: 2.5s;
+        }
+
+        .petal:nth-child(4) {
+            bottom: 0;
+            left: 50px;
+            animation-delay: 3.5s;
+        }
+
+        .center {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 0;
+            height: 0;
+            background-color: yellow;
+            border-radius: 50%;
+            animation: center-grow 4s forwards ease-in-out;
+            animation-delay: 4s;
+        }
+
+        .stem {
+            position: absolute;
+            top: 200px;
+            left: 90px;
+            width: 20px;
+            height: 0;
+            background-color: green;
+            animation: stem-grow 2s forwards ease-in-out;
+            animation-delay: 1s;
+        }
+
+        /* Animasi gambar poop */
+        .poop-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .poop {
+            width: 50px; /* Atur ukuran gambar */
+            position: absolute;
+            animation: poop-float 3s infinite;
+            opacity: 0;
+        }
+
+        /* Dinosaurus */
+        .dino, .dino2, .dino3, .dino4 {
+            position: relative;
+            width: 80px;
+            height: 100px;
+            background-color: #ffcc00; /* Kuning */
+            border-radius: 50% 50% 50% 50%;
+            display: none;
+            animation: jump 0.5s infinite; /* Animasi lompat */
+        }
+
+        .dino {
+            left: 20px; /* Spasi ke kanan */
+        }
+
+        .dino2 {
+            left: 100px; /* Disesuaikan di dalam kontainer pesan */
+        }
+
+        .dino3 {
+            left: 20px; /* Disesuaikan di dalam kontainer pesan */
+        }
+
+        .dino4 {
+            left: 100px; /* Disesuaikan di dalam kontainer pesan */
+        }
+
+        .dino::before, .dino2::before, .dino3::before, .dino4::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            top: -30px; /* Posisi kepala */
+            left: 5px; /* Posisi kepala */
+        }
+
+        .eye {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: white;
+            border-radius: 50%;
+            top: -20px; /* Posisi mata */
+        }
+
+        .eye.left {
+            left: 15px; /* Posisi mata kiri */
+        }
+
+        .eye.right {
+            left: 40px; /* Posisi mata kanan */
+        }
+
+        .eye::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: black;
+            border-radius: 50%;
+            top: 4px; /* posisi pupil */
+            left: 4px; /* posisi pupil */
+        }
+
+        .mouth {
+            position: absolute;
+            width: 30px;
+            height: 10px;
+            background-color: rgb(214, 77, 77);
+            border-radius: 10px;
+            top: 2px; /* posisi mulut */
+            left: 22px; /* posisi mulut */
+        }
+
+        .belly {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            background-color: #fcd5d5; /* Kuning untuk perut */
+            border-radius: 50%;
+            top: 30px; /* posisi perut */
+            left: 20px; /* posisi perut */
+        }
+
+        /* Tangan Dinosaurus */
+        .arm {
+            position: absolute;
+            width: 15px;
+            height: 40px;
+            background-color: #ffcc00;
+            border-radius: 10px;
+            top: 30px; /* Posisi tangan */
+        }
+
+        .arm.left {
+            left: -10px; /* Spasi tangan kiri */
+            transform: rotate(45deg);
+        }
+
+        .arm.right {
+            right: -10px; /* Spasi tangan kanan */
+            transform: rotate(-45deg);
+        }
+
+        /* Kaki Dinosaurus */
+        .leg {
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background-color: #ffcc00;
+            border-radius: 10px;
+            bottom: -10px; /* Posisi kaki */
+        }
+
+        .leg.left {
+            left: 10px; /* Spasi kaki kiri */
+        }
+
+        .leg.right {
+            right: 10px; /* Spasi kaki kanan */
+        }
+
+        @keyframes petal-grow {
+            to {
+                width: 100px;
+                height: 100px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes center-grow {
+            to {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @keyframes stem-grow {
+            to {
+                height: 200px;
+            }
+        }
+
+        @keyframes poop-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes jump {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-30px); /* Tinggi lompat */
+            }
+        }
+
+        /* Styling untuk pesan penyemangat */
+        .message, .message2 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+        
+        /* Kontainer untuk pesan dan dinosaurus */
+        .message-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="question">
+        <h1>Sayang Mau lihat sesuatu tak?</h1>
+        <button onclick="showFlower()">Yes</button>
+        <button onclick="showPoop()">No</button>
+    </div>
+
+    <!-- Bunga -->
+    <div class="flower" id="flower">
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="center"></div>
+        <div class="stem"></div>
+    </div>
+
+    <!-- Dinosaurus 1 -->
+    <div class="dino" id="dino">
+        <div class="belly"></div> <!-- Tambahkan perut -->
+        <div class="eye left"></div> <!-- Mata kiri -->
+        <div class="eye right"></div> <!-- Mata kanan -->
+        <div class="mouth"></div> <!-- Mulut -->
+        <div class="arm left"></div> <!-- Tangan kiri -->
+        <div class="arm right"></div> <!-- Tangan kanan -->
+        <div class="leg left"></div> <!-- Kaki kiri -->
+        <div class="leg right"></div> <!-- Kaki kanan -->
+    </div>
+
+    <!-- Dinosaurus 2 -->
+    <div class="dino2" id="dino2">
+        <div class="belly"></div> <!-- Tambahkan perut -->
+        <div class="eye left"></div> <!-- Mata kiri -->
+        <div class="eye right"></div> <!-- Mata kanan -->
+        <div class="mouth"></div> <!-- Mulut -->
+        <div class="arm left"></div> <!-- Tangan kiri -->
+        <div class="arm right"></div> <!-- Tangan kanan -->
+        <div class="leg left"></div> <!-- Kaki kiri -->
+        <div class="leg right"></div> <!-- Kaki kanan -->
+    </div>
+
+    <div id="message" class="message">
+        <div class="message-container">
+            <p>Dear Claire, I hope today is a good day for you! </p>
+            <div class="dino2" id="dino2">
+                <div class="belly"></div> <!-- Tambahkan perut -->
+                <div class="eye left"></div> <!-- Mata kiri -->
+                <div class="eye right"></div> <!-- Mata kanan -->
+                <div class="mouth"></div> <!-- Mulut -->
+                <div class="arm left"></div> <!-- Tangan kiri -->
+                <div class="arm right"></div> <!-- Tangan kanan -->
+                <div class="leg left"></div> <!-- Kaki kiri -->
+                <div class="leg right"></div> <!-- Kaki kanan -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Dinosaurus 3 -->
+    <div class="dino3" id="dino3">
+        <div class="belly"></div> <!-- Tambahkan perut -->
+        <div class="eye left"></div> <!-- Mata kiri -->
+        <div class="eye right"></div> <!-- Mata kanan -->
+        <div class="mouth"></div> <!-- Mulut -->
+        <div class="arm left"></div> <!-- Tangan kiri -->
+        <div class="arm right"></div> <!-- Tangan kanan -->
+        <div class="leg left"></div> <!-- Kaki kiri -->
+        <div class="leg right"></div> <!-- Kaki kanan -->
+    </div>
+
+    <div id="message" class="message">
+        <div class="message-container">
+            <p>Dear Claire, I hope today is a good day for you! </p>
+            <div class="dino3" id="dino3">
+                <div class="belly"></div> <!-- Tambahkan perut -->
+                <div class="eye left"></div> <!-- Mata kiri -->
+                <div class="eye right"></div> <!-- Mata kanan -->
+                <div class="mouth"></div> <!-- Mulut -->
+                <div class="arm left"></div> <!-- Tangan kiri -->
+                <div class="arm right"></div> <!-- Tangan kanan -->
+                <div class="leg left"></div> <!-- Kaki kiri -->
+                <div class="leg right"></div> <!-- Kaki kanan -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Dinosaurus 4 -->
+    <div class="dino4" id="dino4">
+        <div class="belly"></div> <!-- Tambahkan perut -->
+        <div class="eye left"></div> <!-- Mata kiri -->
+        <div class="eye right"></div> <!-- Mata kanan -->
+        <div class="mouth"></div> <!-- Mulut -->
+        <div class="arm left"></div> <!-- Tangan kiri -->
+        <div class="arm right"></div> <!-- Tangan kanan -->
+        <div class="leg left"></div> <!-- Kaki kiri -->
+        <div class="leg right"></div> <!-- Kaki kanan -->
+    </div>
+
+    <div id="message" class="message">
+        <div class="message-container">
+            <p>Dear Claire, I hope today is a good day for you! </p>
+            <div class="dino4" id="dino4">
+                <div class="belly"></div> <!-- Tambahkan perut -->
+                <div class="eye left"></div> <!-- Mata kiri -->
+                <div class="eye right"></div> <!-- Mata kanan -->
+                <div class="mouth"></div> <!-- Mulut -->
+                <div class="arm left"></div> <!-- Tangan kiri -->
+                <div class="arm right"></div> <!-- Tangan kanan -->
+                <div class="leg left"></div> <!-- Kaki kiri -->
+                <div class="leg right"></div> <!-- Kaki kanan -->
+            </div>
+        </div>
+    </div>
+
+    <div id="message2" class="message2">
+        <p>hufttt tidak mau yaa, Memang kamu lebih sayang Sabrina daripada aku :(</p>
+    </div>
+    
+    <!-- Gambar Sabrina Carpenter melayang -->
+    <div class="poop-container" id="poop-container">
+        <!-- Gambar Sabrina Carpenter di-generate secara dinamis -->
+    </div>
+
+    <script>
+        function showFlower() {
+            document.querySelector('.question').style.display = 'none';
+            const flower = document.getElementById('flower');
+            const dino = document.getElementById('dino');
+            const dino2 = document.getElementById('dino2'); // Dinosaurus kedua
+            const dino3 = document.getElementById('dino3'); // Dinosaurus ke3
+            const dino4 = document.getElementById('dino4'); // Dinosaurus ke4
+            flower.style.display = 'block';
+            dino.style.display = 'block';
+            dino2.style.display = 'block'; // Tampilkan dinosaurus kedua
+            dino3.style.display = 'block'; // Tampilkan dinosaurus kedua
+            dino4.style.display = 'block'; // Tampilkan dinosaurus kedua
+
+            // Setelah animasi bunga selesai (setelah 5 detik), tampilkan pesan
+            setTimeout(function() {
+                document.getElementById('message').style.display = 'block';
+            }, 5000); // 5 detik delay
+        }
+
+        function showPoop() {
+            document.querySelector('.question').style.display = 'none';
+            const poopContainer = document.getElementById('poop-container');
+            poopContainer.style.display = 'block';
+
+            for (let i = 0; i < 20; i++) {
+                let poop = document.createElement('img');
+                poop.className = 'poop';
+                poop.src = 'https://resizing.flixster.com/TNUObVesnGUFtTYveu0dAVb2tlg=/fit-in/352x330/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/720474_v9_bc.jpg'; // Ganti dengan URL gambar yang valid
+                poop.style.left = Math.random() * window.innerWidth + 'px';
+                poop.style.animationDelay = Math.random() * 15 + 's';
+                poopContainer.appendChild(poop);
+            }
+
+            // Tampilkan pesan setelah poop mulai melayang
+            setTimeout(function() {
+                document.getElementById('message2').style.display = 'block';
+            }, 5000); // 5 detik delay
+        }
+    </script>
+</body>
+</html>
