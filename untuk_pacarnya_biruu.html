@@ -13,7 +13,46 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow-x: hidden; /* Menghindari scroll horizontal */
+        }
+
+        /* Container untuk intro */
+        .intro-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            box-sizing: border-box;
+            text-align: center;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-container h2 {
+            font-size: 2rem;
+            color: #d9534f;
+            margin-bottom: 20px;
+        }
+
+        .intro-container button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #2d87f0;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .intro-container button:hover {
+            background-color: #1d65b8;
         }
 
         /* Container untuk ucapan */
@@ -23,32 +62,32 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 60%;
-            margin: 0 auto;
+            width: 80%; /* Lebih responsif */
+            max-width: 900px; /* Maksimal lebar container */
+            margin: 20px auto;
             z-index: 2;
+            box-sizing: border-box; /* Untuk menghitung padding dalam ukuran */
+            display: none; /* Awalnya tersembunyi */
         }
 
         h1 {
             color: #2d87f0;
-            font-size: 36px;
+            font-size: 2rem; /* Ukuran font lebih fleksibel */
             margin-bottom: 20px;
         }
 
         p {
-            font-size: 18px;
+            font-size: 1rem;
             line-height: 1.6;
             color: #555;
+            margin-bottom: 15px;
         }
 
         .signature {
             margin-top: 30px;
-            font-size: 20px;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #333;
-        }
-
-        .highlight {
-            color: #2d87f0;
         }
 
         /* Animasi bunga */
@@ -89,9 +128,51 @@
             animation-delay: 7s;
             left: 75%;
         }
+
+        /* Responsif untuk perangkat mobile */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            .signature {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Responsif untuk perangkat sangat kecil (seperti ponsel) */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            p {
+                font-size: 0.85rem;
+            }
+
+            .signature {
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Intro halaman utama -->
+    <div class="intro-container" id="intro">
+        <h2>Oh no! Can you believe it? You're 21 now! 😱 Time flies, and now you're stepping into a whole new chapter full of adventures. Let's celebrate together!</h2>
+        <button id="startButton">Yes, Let's Go!</button>
+    </div>
 
     <!-- Animasi bunga -->
     <div class="flower"></div>
@@ -100,16 +181,24 @@
     <div class="flower"></div>
 
     <!-- Konten ucapan -->
-    <div class="container">
+    <div class="container" id="messageContainer">
         <h1>Selamat Ulang Tahun yang ke-21, Claire! 🎉💖</h1>
         <p>Sayang,</p>
         <p>Hari ini adalah hari yang sangat spesial, karena kamu merayakan ulang tahun yang ke-21. Rasanya seperti baru kemarin kita mulai berbicara dan mengenal satu sama lain, namun sekarang sudah banyak kenangan yang kita lewati bersama. Aku merasa sangat beruntung memiliki kamu di hidupku, dan aku ingin kamu tahu bahwa kamu adalah salah satu part terbaik dalam hidupku. 💕</p>
         <p>Tahun ini adalah tahun yang penuh dengan perjalanan baru, tantangan, dan juga momen-momen indah. Aku tahu kamu mungkin merasa stres dan tertekan beberapa waktu belakangan ini, tapi aku yakin kamu bisa melewatinya. Kamu adalah orang yang kuat, penuh semangat, dan selalu berusaha memberikan yang terbaik. Jangan pernah ragu bahwa kamu memiliki kemampuan untuk mengatasi setiap hal yang datang di hadapanmu. Kamu hebat dari yang kamu kira, dan aku akan selalu ada di sini untuk mendukungmu, apapun yang terjadi. ❤️</p>
         <p>Semoga di usia yang baru ini, kamu bisa menemukan lebih banyak kebahagiaan, kedamaian, dan pencapaian baru dalam hidupmu. Jangan takut untuk mengejar impianmu, karena aku percaya kamu bisa meraihnya. Aku sangat bangga dengan segala hal yang telah kamu capai, dan aku semakin yakin bahwa masa depanmu akan penuh dengan hal-hal luar biasa. 🌹</p>
         <p>Di hari ulang tahunmu ini, aku hanya ingin mengingatkan kamu bahwa kamu sangat berarti untukku. Aku berjanji untuk terus berada di sisi kamu, untuk saling mendukung dan merayakan setiap momen bersama. Terima kasih sudah menjadi kamu, dan untuk semua kebahagiaan yang kamu bawa ke dalam hidupku. 💫</p>
-        <p>Selamat ulang tahun, Calire. Semoga hari-harimu selalu dipenuhi dengan senyuman dan cinta yang tak terbatas. Aku sayang kamu lebih dari yang bisa aku ungkapkan dengan kata-kata. 💖</p>
+        <p>Selamat ulang tahun, Claire. Semoga hari-harimu selalu dipenuhi dengan senyuman dan cinta yang tak terbatas. Aku sayang kamu lebih dari yang bisa aku ungkapkan dengan kata-kata. 💖</p>
         <p class="signature">With all my love, Biruuu 💕</p>
     </div>
+
+    <script>
+        // Mengatur agar intro hanya tampil sekali
+        document.getElementById("startButton").addEventListener("click", function() {
+            document.getElementById("intro").style.display = "none"; // Menyembunyikan intro
+            document.getElementById("messageContainer").style.display = "block"; // Menampilkan pesan ulang tahun
+        });
+    </script>
 
 </body>
 </html>
