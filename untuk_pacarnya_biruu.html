@@ -1,623 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question and Flower for Claire</title>
+    <title>Happy Birthday, Claire!</title>
     <style>
+        /* Styling umum */
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
             margin: 0;
-            background-color: #f0f8ff;
-            font-family: Arial, sans-serif;
+            padding: 0;
             overflow: hidden;
         }
 
-        .question {
-            text-align: center;
-        }
-
-        .flower, .poop-container, .message, .message2 {
-            display: none;
-        }
-
-        /* Animasi bunga merekah secara bertahap */
-        .flower {
+        /* Container untuk ucapan */
+        .container {
             position: relative;
-            width: 200px;
-            height: 200px;
-        }
-
-        .petal {
-            position: absolute;
-            width: 0;
-            height: 0;
-            background-color: #0000ff; /* Ubah warna petal jadi biru */
-            border-radius: 70%;
-            animation: petal-grow 1s forwards ease-in-out;
-            opacity: 0;
-        }
-
-        .petal:nth-child(1) {
-            top: 0;
-            left: 50px;
-            animation-delay: 0.5s;
-        }
-
-        .petal:nth-child(2) {
-            top: 50px;
-            left: 0;
-            animation-delay: 1.5s;
-        }
-
-        .petal:nth-child(3) {
-            top: 100px;
-            right: 0;
-            animation-delay: 2.5s;
-        }
-
-        .petal:nth-child(4) {
-            top: 70px;
-            left: 90px;
-            animation-delay: 3.5s;
-        }
-        .stem {
-            position: absolute;
-            top: 200px;
-            left: 120px;
-            right: 120px;
-            width: 20px;
-            height: 0;
-            background-color: green;
-            animation: stem-grow 2s forwards ease-in-out;
-            animation-delay: 1s;
-        }
-
-
-        .center {
-            position: absolute;
-            top: 50px;
-            left: 50px;
-            width: 0;
-            height: 0;
-            background-color: yellow;
-            border-radius: 50%;
-            animation: center-grow 4s forwards ease-in-out;
-            animation-delay: 4s;
-        }
-
-
-        /* Animasi gambar poop */
-        .poop-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .poop {
-            width: 50px; /* Atur ukuran gambar */
-            position: absolute;
-            animation: poop-float 3s infinite;
-            opacity: 0;
-        }
-
-        /* Dinosaurus */
-        .dino, .dino2, .dino3, .dino4 {
-            position: relative;
-            width: 50px;
-            height: 120px;
-            background-color: #ffcc00; /* Kuning */
-            border-radius: 50% 50% 50% 50%;
-            display: none;
-            animation: jump 0.5s infinite; /* Animasi lompat */
-        }
-
-        .dino {
-            left: 20px; /* Spasi ke kanan */
-        }
-
-        .dino2 {
-            left: 100px; /* Disesuaikan di dalam kontainer pesan */
-        }
-
-        .dino3 {
-            left: 20px; /* Disesuaikan di dalam kontainer pesan */
-        }
-
-        .dino4 {
-            left: 100px; /* Disesuaikan di dalam kontainer pesan */
-        }
-
-        .dino::before, .dino2::before, .dino3::before, .dino4::before {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 70px;
-            background-color: #ffcc00;
-            border-radius: 50%;
-            top: -40px; /* Posisi kepala */
-            left: 2px; /* Posisi kepala */
-            bottom: unset;
-        }
-
-        .eye {
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            background-color: white;
-            border-radius: 50%;
-            top: -20px; /* Posisi mata */
-        }
-
-        .eye.left {
-            left: 15px; /* Posisi mata kiri */
-        }
-
-        .eye.right {
-            left: 40px; /* Posisi mata kanan */
-        }
-
-        .eye::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background-color: black;
-            border-radius: 50%;
-            top: 4px; /* posisi pupil */
-            left: 4px; /* posisi pupil */
-        }
-
-        .mouth {
-            position: absolute;
-            width: 30px;
-            height: 10px;
-            background-color: rgb(214, 77, 77);
+            background-color: #ffffff;
+            padding: 30px;
             border-radius: 10px;
-            top: 3px; /* posisi mulut */
-            left: 22px; /* posisi mulut */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            margin: 0 auto;
+            z-index: 2;
         }
 
-        .belly {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: #fcd5d5; /* Kuning untuk perut */
-            border-radius: 50%;
-            top: 10px; /* posisi perut */
-            left: 20px; /* posisi perut */
-            right: 10px;
-            bottom: 10px;
+        h1 {
+            color: #2d87f0;
+            font-size: 36px;
+            margin-bottom: 20px;
         }
 
-        /* Tangan Dinosaurus */
-        .arm {
-            position: absolute;
-            width: 15px;
-            height: 40px;
-            background-color: #ffcc00;
-            border-radius: 10px;
-            top: 30px; /* Posisi tangan */
-        }
-
-        .arm.left {
-            left: -10px; /* Spasi tangan kiri */
-            transform: rotate(45deg);
-        }
-
-        .arm.right {
-            right: -10px; /* Spasi tangan kanan */
-            transform: rotate(-45deg);
-        }
-
-        /* Kaki Dinosaurus */
-        .leg {
-            position: absolute;
-            width: 20px;
-            height: 40px;
-            background-color: #ffcc00;
-            border-radius: 10px;
-            bottom: -10px; /* Posisi kaki */
-        }
-
-        .leg.left {
-            left: 10px; /* Spasi kaki kiri */
-        }
-
-        .leg.right {
-            right: 10px; /* Spasi kaki kanan */
-        }
-
-        @keyframes petal-grow {
-            to {
-                width: 100px;
-                height: 100px;
-                opacity: 1;
-            }
-        }
-
-        @keyframes center-grow {
-            to {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        @keyframes stem-grow {
-            to {
-                height: 200px;
-            }
-        }
-
-        @keyframes poop-float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 1;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes jump {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-50px); /* Tinggi lompat */
-            }
-        }
-
-        /* Styling untuk pesan penyemangat */
-        .message, .message2 {
-            text-align: center;
-            font-size: 24px;
-            color: #333;
-            margin-top: 20px;
-            animation: fadeIn 2s forwards;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        button {
-            padding: 10px 20px;
-            margin: 5px;
+        p {
             font-size: 18px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
+            line-height: 1.6;
+            color: #555;
         }
 
-        button:hover {
-            background-color: #ddd;
+        .signature {
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
         }
 
-        /* Kontainer untuk pesan dan dinosaurus */
-        .message-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
+        .highlight {
+            color: #2d87f0;
         }
 
-        /* Media Queries for Responsive Design */
-        @media (max-width: 1000px) {
-            body {
-                flex-direction: column;
-                justify-content: flex-start;
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-
-            .flower {
-                width: 150px;
-                height: 150px;
-            }
-
-            .petal {
-                width: 75px;
-                height: 75px;
-            }
-
-            .center {
-                width: 75px;
-                height: 75px;
-            }
-
-            .stem {
-                top: 150px;
-                left: 60px;
-                width: 15px;
-            }
-
-            button {
-                font-size: 16px;
-                padding: 8px 16px;
-            }
-
-            .message, .message2 {
-                font-size: 18px;
-            }
-
-            .poop {
-                width: 40px; /* Ukuran lebih kecil untuk mobile */
-            }
-
-            .dino, .dino2, .dino3, .dino4 {
-                width: 60px;
-                height: 90px;
-            }
-
-            .eye {
-                width: 10px;
-                height: 10px;
-            }
-
-            .eye::after {
-                width: 6px;
-                height: 6px;
-            }
-
-            .mouth {
-                width: 20px;
-                height: 8px;
-            }
-
-            .belly {
-                width: 25px;
-                height: 42px;
-                bottom: 30px;
-                left: 14px;
-                right: 3px;;
-            }
-
-            .leg {
-                width: 15px;
-                height: 30px;
-            }
-
-            .arm {
-                width: 10px;
-                height: 20px;
-            }
-
-            .poop-container {
-                width: 100%;
-            }
-
+        /* Animasi bunga */
+        .flower {
+            position: absolute;
+            top: -50px;
+            width: 60px;
+            height: 60px;
+            background-image: url('https://image.shutterstock.com/image-vector/cute-drawing-flower-illustration-hand-drawn-260nw-1202180747.jpg');
+            background-size: cover;
+            animation: moveFlower 10s linear infinite;
+            opacity: 0.8;
         }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 20px;
+        /* Animasi pergerakan bunga */
+        @keyframes moveFlower {
+            0% {
+                transform: translateX(-50%) translateY(0);
             }
-
-            .flower {
-                width: 120px;
-                height: 120px;
+            50% {
+                transform: translateX(50%) translateY(100vh);
             }
-
-            .poop {
-                width: 30px;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 6px 12px;
-            }
-
-            .message, .message2 {
-                font-size: 16px;
-            }
-
-            .dino, .dino2, .dino3, .dino4 {
-                width: 50px;
-                height: 70px;
-            }
-
-            .poop-container {
-                width: 90%;
+            100% {
+                transform: translateX(-50%) translateY(-100vh);
             }
         }
 
-
-@keyframes slideUp {
-    0% {
-        transform: translateY(100%); /* Mulai dari bawah (100%) */
-        opacity: 0; /* Memulai dengan transparan */
-    }
-    100% {
-        transform: translateY(0); /* Akhir di posisi normal */
-        opacity: 1; /* Menjadi terlihat */
-    }
-}
-
-.slide-up {
-    animation: slideUp 2s ease-in-out forwards; /* Durasi dan pengulangan */
-}
-
-
+        /* Bunga tambahan dengan variasi posisi */
+        .flower:nth-child(2) {
+            animation-delay: 3s;
+            left: 25%;
+        }
+        .flower:nth-child(3) {
+            animation-delay: 5s;
+            left: 50%;
+        }
+        .flower:nth-child(4) {
+            animation-delay: 7s;
+            left: 75%;
+        }
     </style>
 </head>
 <body>
-    <div class="question">
-        <h1>Sayang Mau lihat sesuatu tak?</h1>
-        <button onclick="showFlower()">Yes</button>
-        <button onclick="showPoop()">No</button>
+
+    <!-- Animasi bunga -->
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+
+    <!-- Konten ucapan -->
+    <div class="container">
+        <h1>Selamat Ulang Tahun yang ke-21, Claire! 🎉💖</h1>
+        <p>Sayang,</p>
+        <p>Hari ini adalah hari yang sangat spesial, karena kamu merayakan ulang tahun yang ke-21. Rasanya seperti baru kemarin kita mulai berbicara dan mengenal satu sama lain, namun sekarang sudah banyak kenangan yang kita lewati bersama. Aku merasa sangat beruntung memiliki kamu di hidupku, dan aku ingin kamu tahu bahwa kamu adalah salah satu part terbaik dalam hidupku. 💕</p>
+        <p>Tahun ini adalah tahun yang penuh dengan perjalanan baru, tantangan, dan juga momen-momen indah. Aku tahu kamu mungkin merasa stres dan tertekan beberapa waktu belakangan ini, tapi aku yakin kamu bisa melewatinya. Kamu adalah orang yang kuat, penuh semangat, dan selalu berusaha memberikan yang terbaik. Jangan pernah ragu bahwa kamu memiliki kemampuan untuk mengatasi setiap hal yang datang di hadapanmu. Kamu hebat dari yang kamu kira, dan aku akan selalu ada di sini untuk mendukungmu, apapun yang terjadi. ❤️</p>
+        <p>Semoga di usia yang baru ini, kamu bisa menemukan lebih banyak kebahagiaan, kedamaian, dan pencapaian baru dalam hidupmu. Jangan takut untuk mengejar impianmu, karena aku percaya kamu bisa meraihnya. Aku sangat bangga dengan segala hal yang telah kamu capai, dan aku semakin yakin bahwa masa depanmu akan penuh dengan hal-hal luar biasa. 🌹</p>
+        <p>Di hari ulang tahunmu ini, aku hanya ingin mengingatkan kamu bahwa kamu sangat berarti untukku. Aku berjanji untuk terus berada di sisi kamu, untuk saling mendukung dan merayakan setiap momen bersama. Terima kasih sudah menjadi kamu, dan untuk semua kebahagiaan yang kamu bawa ke dalam hidupku. 💫</p>
+        <p>Selamat ulang tahun, Calire. Semoga hari-harimu selalu dipenuhi dengan senyuman dan cinta yang tak terbatas. Aku sayang kamu lebih dari yang bisa aku ungkapkan dengan kata-kata. 💖</p>
+        <p class="signature">With all my love, Biruuu 💕</p>
     </div>
 
-    <!-- Bunga -->
-    <div class="flower" id="flower">
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="center"></div>
-        <div class="stem"></div>
-    </div>
-
-    <!-- Dinosaurus 1 -->
-    <div class="dino" id="dino">
-        <div class="belly"></div> <!-- Tambahkan perut -->
-        <div class="eye left"></div> <!-- Mata kiri -->
-        <div class="eye right"></div> <!-- Mata kanan -->
-        <div class="mouth"></div> <!-- Mulut -->
-        <div class="arm left"></div> <!-- Tangan kiri -->
-        <div class="arm right"></div> <!-- Tangan kanan -->
-        <div class="leg left"></div> <!-- Kaki kiri -->
-        <div class="leg right"></div> <!-- Kaki kanan -->
-    </div>
-
-    <!-- Dinosaurus 2 -->
-    <div class="dino2" id="dino2">
-        <div class="belly"></div> <!-- Tambahkan perut -->
-        <div class="eye left"></div> <!-- Mata kiri -->
-        <div class="eye right"></div> <!-- Mata kanan -->
-        <div class="mouth"></div> <!-- Mulut -->
-        <div class="arm left"></div> <!-- Tangan kiri -->
-        <div class="arm right"></div> <!-- Tangan kanan -->
-        <div class="leg left"></div> <!-- Kaki kiri -->
-        <div class="leg right"></div> <!-- Kaki kanan -->
-    </div>
-
-    <div id="message" class="message">
-        <div class="message-container">
-            <p class="slide-up">Dear Claire, I hope today is a good day for you!</p>
-
-            <div class="dino2" id="dino2">
-                <div class="belly"></div> <!-- Tambahkan perut -->
-                <div class="eye left"></div> <!-- Mata kiri -->
-                <div class="eye right"></div> <!-- Mata kanan -->
-                <div class="mouth"></div> <!-- Mulut -->
-                <div class="arm left"></div> <!-- Tangan kiri -->
-                <div class="arm right"></div> <!-- Tangan kanan -->
-                <div class="leg left"></div> <!-- Kaki kiri -->
-                <div class="leg right"></div> <!-- Kaki kanan -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Dinosaurus 3 -->
-    <div class="dino3" id="dino3">
-        <div class="belly"></div> <!-- Tambahkan perut -->
-        <div class="eye left"></div> <!-- Mata kiri -->
-        <div class="eye right"></div> <!-- Mata kanan -->
-        <div class="mouth"></div> <!-- Mulut -->
-        <div class="arm left"></div> <!-- Tangan kiri -->
-        <div class="arm right"></div> <!-- Tangan kanan -->
-        <div class="leg left"></div> <!-- Kaki kiri -->
-        <div class="leg right"></div> <!-- Kaki kanan -->
-    </div>
-
-    <div id="message" class="message">
-        <div class="message-container">
-            <p>Dear Claire, I hope today is a good day for you! </p>
-            <div class="dino3" id="dino3">
-                <div class="belly"></div> <!-- Tambahkan perut -->
-                <div class="eye left"></div> <!-- Mata kiri -->
-                <div class="eye right"></div> <!-- Mata kanan -->
-                <div class="mouth"></div> <!-- Mulut -->
-                <div class="arm left"></div> <!-- Tangan kiri -->
-                <div class="arm right"></div> <!-- Tangan kanan -->
-                <div class="leg left"></div> <!-- Kaki kiri -->
-                <div class="leg right"></div> <!-- Kaki kanan -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Dinosaurus 4 -->
-    <div class="dino4" id="dino4">
-        <div class="belly"></div> <!-- Tambahkan perut -->
-        <div class="eye left"></div> <!-- Mata kiri -->
-        <div class="eye right"></div> <!-- Mata kanan -->
-        <div class="mouth"></div> <!-- Mulut -->
-        <div class="arm left"></div> <!-- Tangan kiri -->
-        <div class="arm right"></div> <!-- Tangan kanan -->
-        <div class="leg left"></div> <!-- Kaki kiri -->
-        <div class="leg right"></div> <!-- Kaki kanan -->
-    </div>
-
-    <div id="message" class="message">
-        <div class="message-container">
-            <p>Dear Claire, I hope today is a good day for you! </p>
-            <div class="dino4" id="dino4">
-                <div class="belly"></div> <!-- Tambahkan perut -->
-                <div class="eye left"></div> <!-- Mata kiri -->
-                <div class="eye right"></div> <!-- Mata kanan -->
-                <div class="mouth"></div> <!-- Mulut -->
-                <div class="arm left"></div> <!-- Tangan kiri -->
-                <div class="arm right"></div> <!-- Tangan kanan -->
-                <div class="leg left"></div> <!-- Kaki kiri -->
-                <div class="leg right"></div> <!-- Kaki kanan -->
-            </div>
-        </div>
-    </div>
-
-    <div id="message2" class="message2">
-        <p>hufttt tidak mau yaa, Memang kamu lebih sayang Sabrina daripada aku :(</p>
-    </div>
-    
-    <!-- Gambar Sabrina Carpenter melayang -->
-    <div class="poop-container" id="poop-container">
-        <!-- Gambar Sabrina Carpenter di-generate secara dinamis -->
-    </div>
-
-    <script>
-        function showFlower() {
-            document.querySelector('.question').style.display = 'none';
-            const flower = document.getElementById('flower');
-            const dino = document.getElementById('dino');
-            const dino2 = document.getElementById('dino2'); // Dinosaurus kedua
-            const dino3 = document.getElementById('dino3'); // Dinosaurus ke3
-            const dino4 = document.getElementById('dino4'); // Dinosaurus ke4
-            flower.style.display = 'block';
-            dino.style.display = 'block';
-            dino2.style.display = 'block'; // Tampilkan dinosaurus kedua
-            dino3.style.display = 'block'; // Tampilkan dinosaurus kedua
-            dino4.style.display = 'block'; // Tampilkan dinosaurus kedua
-
-            // Setelah animasi bunga selesai (setelah 5 detik), tampilkan pesan
-            setTimeout(function() {
-                document.getElementById('message').style.display = 'block';
-            }, 5000); // 5 detik delay
-        }
-
-        function showPoop() {
-            document.querySelector('.question').style.display = 'none';
-            const poopContainer = document.getElementById('poop-container');
-            poopContainer.style.display = 'block';
-
-            for (let i = 0; i < 20; i++) {
-                let poop = document.createElement('img');
-                poop.className = 'poop';
-                poop.src = 'https://resizing.flixster.com/TNUObVesnGUFtTYveu0dAVb2tlg=/fit-in/352x330/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/720474_v9_bc.jpg'; // Ganti dengan URL gambar yang valid
-                poop.style.left = Math.random() * window.innerWidth + 'px';
-                poop.style.animationDelay = Math.random() * 15 + 's';
-                poopContainer.appendChild(poop);
-            }
-
-            // Tampilkan pesan setelah poop mulai melayang
-            setTimeout(function() {
-                document.getElementById('message2').style.display = 'block';
-            }, 5000); // 5 detik delay
-        }
-    </script>
 </body>
 </html>
